@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voltio – Loja de tecnologia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f5;--surface:#fff;--ink:#14202e;--muted:#5d6b7c;--line:#d9dfe7;--accent:#2f4bff;--accent-ink:#fff;--tag:#dff7ea;--tag-ink:#0b5b34;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1620;--surface:#18222f;--ink:#eef2f7;--muted:#9aa8b8;--line:#2a3646;--accent:#6f84ff;--accent-ink:#0b1020;--tag:#12382a;--tag-ink:#8ff0bd;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1620;--surface:#18222f;--ink:#eef2f7;--muted:#9aa8b8;--line:#2a3646;--accent:#6f84ff;--accent-ink:#0b1020;--tag:#12382a;--tag-ink:#8ff0bd;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",sans-serif;margin:0;line-height:1.1}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.logo{font:800 24px "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.search{flex:1;max-width:420px;margin-left:auto}
+.search input{width:100%;height:40px;border:1px solid var(--line);border-radius:10px;padding:0 14px;background:var(--surface);color:var(--ink);font:inherit}
+.cartbtn{height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:500}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-.03em}
+.hero p{color:var(--muted);max-width:46ch;margin:16px 0 24px}
+.cta{display:inline-block;padding:12px 22px;border-radius:10px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:500}
+.spot{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.spot .ico{height:180px;border-radius:14px;display:grid;place-items:center;font-size:84px;background:linear-gradient(135deg,#2f4bff,#7a5cff)}
+.perks{display:flex;gap:24px;flex-wrap:wrap;padding:0 0 32px;color:var(--muted);font-size:14px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 20px;align-items:center}
+.chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select{margin-left:auto;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 10px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;padding-bottom:56px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.card .ico{height:140px;border-radius:12px;display:grid;place-items:center;font-size:60px}
+.card h3{font-size:18px;font-weight:600}
+.card small{color:var(--muted)}
+.tag{align-self:flex-start;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--tag);color:var(--tag-ink)}
+.price{font:800 22px "Bricolage Grotesque",sans-serif}
+.old{color:var(--muted);text-decoration:line-through;font-size:14px;margin-left:6px;font-family:"IBM Plex Sans",sans-serif;font-weight:400}
+.add{margin-top:auto;height:40px;border-radius:10px;border:1px solid var(--ink);background:transparent;font-weight:500}
+.add:hover{background:var(--ink);color:var(--bg)}
+.empty{grid-column:1/-1;color:var(--muted);padding:40px 0;text-align:center}
+aside{position:fixed;inset:0 0 0 auto;width:min(400px,100%);background:var(--surface);border-left:1px solid var(--line);transform:translateX(100%);transition:transform .25s;z-index:10;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px))}
+aside.open{transform:none}
+.drawerhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.items{flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center}
+.row .t{font-size:28px;text-align:center}
+.qty{display:flex;align-items:center;gap:6px;margin-top:4px}
+.qty button{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:transparent}
+.total{display:flex;justify-content:space-between;font:800 20px "Bricolage Grotesque",sans-serif;padding:14px 0}
+.buy{height:46px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:500}
+.x{border:0;background:transparent;font-size:22px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;opacity:0;transition:.25s;z-index:20;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:32px}.bar{gap:10px}.logo{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+<div class="logo">Volt<span>io</span></div>
+<div class="search"><input id="q" type="search" placeholder="Buscar produtos" aria-label="Buscar produtos"></div>
+<button class="cartbtn" id="open">Carrinho (<span id="count">0</span>)</button>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+<div>
+<h1>Tecnologia que funciona desde o primeiro dia.</h1>
+<p>Notebooks, celulares, áudio e acessórios com garantia de 12 meses, frete grátis acima de R$ 299 e parcelamento em até 10x sem juros.</p>
+<a class="cta" href="#produtos">Ver produtos</a>
+</div>
+<div class="spot"><div class="ico" aria-hidden="true">💻</div>
+<span class="tag">Destaque da semana</span>
+<h2 style="font-size:24px">Notebook Aero 14</h2>
+<span class="price">R$ 4.299,00 <span class="old">R$ 4.799,00</span></span>
+<button class="add" data-id="1">Adicionar ao carrinho</button></div>
+</section>
+<div class="perks"><span>Frete grátis acima de R$ 299</span><span>Garantia de 12 meses</span><span>Troca em até 30 dias</span><span>Pix com 5% de desconto</span></div>
+
+<h2 id="produtos" style="font-size:30px;margin-bottom:14px">Produtos</h2>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</main>
+
+<footer><div class="wrap">Voltio · Loja demonstrativa. Os produtos e preços são fictícios.</div></footer>
+
+<aside id="drawer" aria-label="Carrinho" aria-hidden="true">
+<div class="drawerhead"><h2 style="font-size:24px">Seu carrinho</h2><button class="x" id="close" aria-label="Fechar carrinho">×</button></div>
+<div class="items" id="items"></div>
+<div class="total"><span>Total</span><span id="total">R$ 0,00</span></div>
+<button class="buy" id="buy">Finalizar compra</button>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const P=[
+{id:1,n:"Notebook Aero 14",c:"Notebooks",p:4299,o:4799,e:"💻",d:"Ryzen 7, 16 GB, SSD 512 GB, tela 14\" 2.8K",col:"#2f4bff"},
+{id:2,n:"Notebook Forge 16 Gamer",c:"Notebooks",p:8499,e:"🎮",d:"Core i7, RTX 4060, 32 GB, tela 165 Hz",col:"#7a5cff"},
+{id:3,n:"Smartphone Pulse X",c:"Celulares",p:3199,o:3499,e:"📱",d:"256 GB, câmera tripla 50 MP, tela AMOLED",col:"#0ea5a4"},
+{id:4,n:"Smartphone Lite 5G",c:"Celulares",p:1399,e:"📲",d:"128 GB, 5G, bateria de 2 dias",col:"#e0662e"},
+{id:5,n:"Fone Nimbus ANC",c:"Áudio",p:899,o:1099,e:"🎧",d:"Cancelamento de ruído, 40 h de bateria",col:"#3b82f6"},
+{id:6,n:"Caixa Beat Mini",c:"Áudio",p:349,e:"🔊",d:"Bluetooth 5.3, à prova d’água IP67",col:"#d946a8"},
+{id:7,n:"Smartwatch Orbit",c:"Wearables",p:1249,e:"⌚",d:"GPS, monitor cardíaco, 7 dias de bateria",col:"#16a34a"},
+{id:8,n:"Monitor Vista 27\" 4K",c:"Periféricos",p:2399,o:2699,e:"🖥️",d:"IPS 4K, 60 Hz, USB-C com 65 W",col:"#6366f1"},
+{id:9,n:"Teclado Mecânico Kora",c:"Periféricos",p:459,e:"⌨️",d:"Switch tátil, sem fio, layout ABNT2",col:"#ca8a04"},
+{id:10,n:"Mouse Glide Pro",c:"Periféricos",p:299,e:"🖱️",d:"Sensor 26K DPI, 5 botões, recarregável",col:"#0891b2"},
+{id:11,n:"SSD Externo 1 TB",c:"Armazenamento",p:649,o:749,e:"💾",d:"Leitura de 1.050 MB/s, USB-C",col:"#475569"},
+{id:12,n:"Carregador GaN 65 W",c:"Armazenamento",p:189,e:"🔌",d:"2 portas USB-C e 1 USB-A, compacto",col:"#dc2626"}];
+const fmt=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let cat="Todos",cart={},term="",sort="rel";
+try{cart=JSON.parse(localStorage.getItem("voltio-cart")||"{}")}catch(e){}
+const $=s=>document.querySelector(s);
+function save(){try{localStorage.setItem("voltio-cart",JSON.stringify(cart))}catch(e){}}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),1600)}
+function filters(){const cs=["Todos",...new Set(P.map(p=>p.c))];
+$("#filters").innerHTML=cs.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("")+
+`<select id="sort" aria-label="Ordenar"><option value="rel">Relevância</option><option value="asc">Menor preço</option><option value="desc">Maior preço</option></select>`;
+$("#sort").value=sort}
+function grid(){let l=P.filter(p=>(cat==="Todos"||p.c===cat)&&(p.n+p.d+p.c).toLowerCase().includes(term));
+if(sort==="asc")l.sort((a,b)=>a.p-b.p);if(sort==="desc")l.sort((a,b)=>b.p-a.p);
+$("#grid").innerHTML=l.length?l.map(p=>`<article class="card"><div class="ico" aria-hidden="true" style="background:${p.col}22">${p.e}</div>
+${p.o?`<span class="tag">${Math.round((1-p.p/p.o)*100)}% off</span>`:`<small>${p.c}</small>`}
+<h3>${p.n}</h3><small>${p.d}</small>
+<div><span class="price">${fmt(p.p)}${p.o?`<span class="old">${fmt(p.o)}</span>`:""}</span><br><small>ou 10x de ${fmt(p.p/10)}</small></div>
+<button class="add" data-id="${p.id}">Adicionar ao carrinho</button></article>`).join(""):`<p class="empty">Nenhum produto encontrado. Tente outra busca ou categoria.</p>`}
+function renderCart(){const ids=Object.keys(cart).filter(i=>cart[i]>0);let tot=0,n=0;
+$("#items").innerHTML=ids.length?ids.map(i=>{const p=P.find(x=>x.id==i);tot+=p.p*cart[i];n+=cart[i];
+return`<div class="row"><div class="t">${p.e}</div><div><strong>${p.n}</strong><div class="qty"><button data-m="${i}" aria-label="Diminuir">−</button><span>${cart[i]}</span><button data-a="${i}" aria-label="Aumentar">+</button></div></div><div>${fmt(p.p*cart[i])}</div></div>`}).join(""):`<p class="empty">Seu carrinho está vazio. Adicione um produto para começar.</p>`;
+$("#total").textContent=fmt(tot);$("#count").textContent=n;save()}
+function drawer(o){const d=$("#drawer");d.classList.toggle("open",o);d.setAttribute("aria-hidden",!o)}
+document.addEventListener("click",e=>{const t=e.target;
+if(t.dataset.c){cat=t.dataset.c;filters();grid()}
+if(t.classList.contains("add")){const p=P.find(x=>x.id==t.dataset.id);cart[p.id]=(cart[p.id]||0)+1;renderCart();toast(p.n+" adicionado")}
+if(t.dataset.a){cart[t.dataset.a]++;renderCart()}
+if(t.dataset.m){cart[t.dataset.m]--;renderCart()}});
+document.addEventListener("change",e=>{if(e.target.id==="sort"){sort=e.target.value;grid()}});
+$("#q").addEventListener("input",e=>{term=e.target.value.toLowerCase();grid()});
+$("#open").onclick=()=>drawer(true);$("#close").onclick=()=>drawer(false);
+$("#buy").onclick=()=>{if(!Object.values(cart).some(v=>v>0)){toast("Adicione um produto antes de finalizar");return}
+cart={};renderCart();drawer(false);toast("Pedido recebido! Obrigado pela compra.")};
+filters();grid();renderCart();
+</script>
+</body>
+</html>
